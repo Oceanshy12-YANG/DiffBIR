@@ -985,15 +985,3 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         pred = self(lq)
         return dict(lq=lq, pred=pred, hq=hq)
 
-
-#展示图像
-from torchvision.transforms import ToPILImage
-
-# Assuming pred is a tensor representing the predicted image
-to_pil = ToPILImage()
-pred_image = to_pil(pred.squeeze().cpu())  # Assuming pred is a single image tensor
-
-# Display the predicted image using Matplotlib
-plt.imshow(pred_image)
-plt.title('预测图像')
-plt.show()
