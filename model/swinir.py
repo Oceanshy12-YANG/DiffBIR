@@ -960,11 +960,11 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         lpips = self.lpips_metric(pred, hq, normalize=True).mean()
         self.log("val_lpips", lpips)
         
-        #pnsr = calculate_psnr_pt(pred, hq, crop_border=0).mean()
-        #self.log("val_pnsr", pnsr)
+        pnsr = calculate_psnr_pt(pred, hq, crop_border=0).mean()
+        self.log("val_pnsr", pnsr)
         
         loss = self.get_loss(pred, hq)
-        #self.log("val_loss", loss)
+        self.log("val_loss", loss)
     
     def configure_optimizers(self) -> optim.AdamW:
         """
