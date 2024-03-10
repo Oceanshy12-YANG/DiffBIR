@@ -19,7 +19,20 @@ from einops import rearrange
 
 #这里有一处修改
 from utils.metrics import calculate_psnr_pt, LPIPS
-from .mixins import ImageLoggerMixin
+#from .mixins import ImageLoggerMixin
+
+
+
+from typing import overload, Any, Dict
+import torch
+
+
+class ImageLoggerMixin:
+
+    @overload
+    def log_images(self, batch: Any, **kwargs: Dict[str, Any]) -> Dict[str, torch.Tensor]:
+        ...
+
 
 
 class Mlp(nn.Module):
