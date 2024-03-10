@@ -18,7 +18,7 @@ from einops import rearrange
 
 
 #这里有一处修改
-#from utils.metrics import calculate_psnr_pt, LPIPS
+from utils.metrics import calculate_psnr_pt, LPIPS
 from .mixins import ImageLoggerMixin
 
 
