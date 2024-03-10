@@ -1106,3 +1106,19 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         pred = self(lq)
         return dict(lq=lq, pred=pred, hq=hq)
 
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Assuming lq is a torch tensor
+lq_np = lq.squeeze(0).permute(1, 2, 0).cpu().numpy()  # Assuming lq is of shape (1, C, H, W)
+
+# Assuming lq_np is in the range [0, 1]
+lq_np_clipped = np.clip(lq_np, 0, 1)
+
+# Plot and save the image
+plt.imshow(lq_np_clipped)
+plt.axis('off')  # Turn off axis
+plt.savefig('lq_image.png', bbox_inches='tight', pad_inches=0)  # Save as PNG file
+plt.show()
