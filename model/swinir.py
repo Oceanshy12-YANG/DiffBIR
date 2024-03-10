@@ -17,8 +17,8 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from einops import rearrange
 
 
-#这里有一处修改
-from utils.metrics import calculate_psnr_pt, LPIPS
+#这里有一处修改，我已经把utils.metrics里面的东西全部粘贴过来了
+#from utils.metrics import calculate_psnr_pt, LPIPS
 #下面这些内容都是 utils.metrics 里面的
 import torch
 import lpips
@@ -54,7 +54,12 @@ def rgb2ycbcr_pt(img, y_only=False):
 #from .common import frozen_module
 ###
 ###
-
+#
+def frozen_module(module: nn.Module) -> None:
+    module.eval()
+    module.train = disabled_train
+    for p in module.parameters():
+        p.requires_grad = False
 
 
 
@@ -122,12 +127,6 @@ class LPIPS:
 #from .mixins import ImageLoggerMixin
 #
 #
-
-
-
-
-
-
 #
 #下面是.mixins包里面的东西
 from typing import overload, Any, Dict
