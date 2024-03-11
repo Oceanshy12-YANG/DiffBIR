@@ -1112,8 +1112,8 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
     import numpy as np
 
     hq, lq = batch[self.hq_key], batch[self.lq_key]
-        hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
-        lq = rearrange(lq, "n h w c -> n c h w")
+    hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
+    lq = rearrange(lq, "n h w c -> n c h w")
 
 
     # Assuming lq is a torch tensor
