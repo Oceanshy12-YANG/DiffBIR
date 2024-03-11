@@ -1148,7 +1148,7 @@ def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
     plt.close()  # Close the plot
     
     # Open and display the image in Colab
-    image = Image.open('/content/lq_image.png')
-    image.show()
+    #image = Image.open('/content/lq_image.png')
+    #image.show()
 
 
