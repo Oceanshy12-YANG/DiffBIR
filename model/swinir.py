@@ -1131,7 +1131,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-def log_images(self, batch: Any) -> Dict[str, torch.Tensor]:
+def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
     hq, lq = batch[self.hq_key], batch[self.lq_key]
     hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
     lq = rearrange(lq, "n h w c -> n c h w")
