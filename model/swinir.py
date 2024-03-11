@@ -1108,22 +1108,22 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
 
 
 
-import matplotlib.pyplot as plt
-import numpy as np
+    import matplotlib.pyplot as plt
+    import numpy as np
 
-hq, lq = batch[self.hq_key], batch[self.lq_key]
-    hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
-    lq = rearrange(lq, "n h w c -> n c h w")
+    hq, lq = batch[self.hq_key], batch[self.lq_key]
+        hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
+        lq = rearrange(lq, "n h w c -> n c h w")
 
 
-# Assuming lq is a torch tensor
-lq_np = lq.squeeze(0).permute(1, 2, 0).cpu().numpy()  # Assuming lq is of shape (1, C, H, W)
+    # Assuming lq is a torch tensor
+    lq_np = lq.squeeze(0).permute(1, 2, 0).cpu().numpy()  # Assuming lq is of shape (1, C, H, W)
 
-# Assuming lq_np is in the range [0, 1]
-lq_np_clipped = np.clip(lq_np, 0, 1)
+    # Assuming lq_np is in the range [0, 1]
+    lq_np_clipped = np.clip(lq_np, 0, 1)
 
-# Plot and save the image
-plt.imshow(lq_np_clipped)
-plt.axis('off')  # Turn off axis
-plt.savefig('lq_image.png', bbox_inches='tight', pad_inches=0)  # Save as PNG file
-plt.show()
+    # Plot and save the image
+    plt.imshow(lq_np_clipped)
+    plt.axis('off')  # Turn off axis
+    plt.savefig('lq_image.png', bbox_inches='tight', pad_inches=0)  # Save as PNG file
+    plt.show()
