@@ -1002,7 +1002,7 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         print(images.size())  # torch.Size([8, 1, 28, 28])
         images = make_grid(images, 4, 0)
         print(images.size())  # torch.Size([3, 84, 84])
-        save_image(images, 'D:\maozan1\Desktop\JDWork\\vscode\pytorch-demo\\test.jpg')
+        save_image(images, '/content/test.jpg')
 
 
 
