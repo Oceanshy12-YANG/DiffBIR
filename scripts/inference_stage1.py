@@ -60,9 +60,8 @@ def main():
         
         # load low-quality image and resize
         lq = Image.open(file_path).convert("RGB")
-        plt.imshow(lq)
-        plt.axis('off')  # 关闭坐标轴
-        plt.show()#这三句话是后来的
+        print("Type of lq:", type(lq))
+        print("Shape of lq:", lq.shape)
         
         if args.sr_scale != 1:
             lq = lq.resize(
