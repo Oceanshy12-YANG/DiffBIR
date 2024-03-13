@@ -1070,6 +1070,8 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
 
     def validation_step(self, batch: Dict[str, torch.Tensor], batch_idx: int) -> None:
         hq, lq = batch[self.hq_key], batch[self.lq_key]
+        print("Type of lq:", type(lq))
+        print("Shape of lq:", lq.shape)
         lq = rearrange(lq, "n h w c -> n c h w")
         pred = self(lq)
         hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
