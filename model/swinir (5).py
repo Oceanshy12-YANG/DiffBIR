@@ -1017,7 +1017,7 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
 
 
 
-"""
+""""""
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
