@@ -958,6 +958,19 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
 
     def validation_step(self, batch: Dict[str, torch.Tensor], batch_idx: int) -> None:
         hq, lq = batch[self.hq_key], batch[self.lq_key]
+        # 将 PIL 图像对象转换为 PyTorch 张量
+        transform = transforms.ToTensor()
+        lq_tensor = transform(lq)
+        # 将 PyTorch 张量转换为 NumPy 数组
+        lq_numpy = lq_tensor.numpy()
+        # 保存 NumPy 数组为图像文件
+        output_path = '/content/lq_image.jpg'
+        cv2.imwrite(output_path, cv2.cvtColor((lq_numpy * 255).astype('uint8').transpose(1, 2, 0), cv2.COLOR_RGB2BGR))
+        # 输出保存的文件路径
+        print("Image 保存在:", output_path)
+
+
+        
         lq = rearrange(lq, "n h w c -> n c h w")
         pred = self(lq)
         hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
@@ -997,36 +1010,3 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         pred = self(lq)
         return dict(lq=lq, pred=pred, hq=hq)
 
-
-"""
-
-    def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
-        hq, lq = batch[self.hq_key], batch[self.lq_key]
-        images, labels = next(iter(lq))
-        print(images.size())  # torch.Size([8, 1, 28, 28])
-        images = make_grid(images, 4, 0)
-        images = cv2.imread('/content/test.jpg')
-        cv2.imwrite('/content/test_cv2.jpg', image)
-"""
-
-"""""
-import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
-
-def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
-    hq, lq = batch[self.hq_key], batch[self.lq_key]
-    hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
-    lq = rearrange(lq, "n h w c -> n c h w")
-    # Assuming lq is a torch tensor
-    lq_np = lq.squeeze(0).permute(1, 2, 0).cpu().numpy()  # Assuming lq is of shape (1, C, H, W)
-
-    # Assuming lq_np is in the range [0, 1]
-    lq_np_clipped = np.clip(lq_np, 0, 1)
-
-    # Plot and save the image
-    plt.imshow(lq_np_clipped)
-    plt.axis('off')  # Turn off axis
-    plt.savefig('/content/lq_image.png', bbox_inches='tight', pad_inches=0)  # Save as PNG file
-    plt.close()  # Close the plot
-"""
