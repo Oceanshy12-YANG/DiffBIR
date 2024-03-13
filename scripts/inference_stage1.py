@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import sys
+import cv2
 from torchvision import transforms
 sys.path.append(".")
 import os
@@ -61,13 +62,16 @@ def main():
         
         # load low-quality image and resize
         lq = Image.open(file_path).convert("RGB")
-        # 将PIL图像对象转换为PyTorch张量
+        # 将 PIL 图像对象转换为 PyTorch 张量
         transform = transforms.ToTensor()
         lq_tensor = transform(lq)
-
-        # 输出张量信息
-        print("Type of lq:", type(lq_tensor))
-        print("Shape of lq张量:", lq_tensor.shape)
+        # 将 PyTorch 张量转换为 NumPy 数组
+        lq_numpy = lq_tensor.numpy()
+        # 保存 NumPy 数组为图像文件
+        output_path = '/content/lq_image.jpg'
+        cv2.imwrite(output_path, cv2.cvtColor((lq_numpy * 255).astype('uint8').transpose(1, 2, 0), cv2.COLOR_RGB2BGR))
+        # 输出保存的文件路径
+        print("Image 保存在:", output_path)
         
         if args.sr_scale != 1:
             lq = lq.resize(
