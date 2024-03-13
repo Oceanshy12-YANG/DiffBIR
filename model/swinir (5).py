@@ -989,7 +989,21 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         pred = self(lq)
         return dict(lq=lq, pred=pred, hq=hq)
 
+import torch
+from torch.utils.data import DataLoader, dataloader
+from torchvision import datasets, transforms
+from torchvision.utils import make_grid, save_image
 
+images, labels = next(iter(lq))
+print(images.size())  # torch.Size([8, 1, 28, 28])
+images = make_grid(images, 4, 0)
+print(images.size())  # torch.Size([3, 84, 84])
+save_image(images, 'D:\maozan1\Desktop\JDWork\\vscode\pytorch-demo\\test.jpg')
+
+
+
+
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
@@ -1009,3 +1023,4 @@ def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
     plt.axis('off')  # Turn off axis
     plt.savefig('/content/lq_image.png', bbox_inches='tight', pad_inches=0)  # Save as PNG file
     plt.close()  # Close the plot
+"""
