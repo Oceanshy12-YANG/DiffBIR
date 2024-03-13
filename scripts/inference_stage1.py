@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import sys
 sys.path.append(".")
 import os
@@ -59,6 +60,10 @@ def main():
         
         # load low-quality image and resize
         lq = Image.open(file_path).convert("RGB")
+        plt.imshow(lq)
+        plt.axis('off')  # 关闭坐标轴
+        plt.show()#这三句话是后来的
+        
         if args.sr_scale != 1:
             lq = lq.resize(
                 tuple(int(x * args.sr_scale) for x in lq.size), Image.BICUBIC
