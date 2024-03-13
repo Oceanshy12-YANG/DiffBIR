@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import sys
+from torchvision import transforms
 sys.path.append(".")
 import os
 from argparse import ArgumentParser, Namespace
@@ -60,8 +61,13 @@ def main():
         
         # load low-quality image and resize
         lq = Image.open(file_path).convert("RGB")
-        print("Type of lq:", type(lq))
-        print("Shape of lq:", lq.size)
+        # 将PIL图像对象转换为PyTorch张量
+        transform = transforms.ToTensor()
+        lq_tensor = transform(lq)
+
+        # 输出张量信息
+        print("Type of lq:", type(lq_tensor))
+        print("Shape of lq张量:", lq_tensor.shape)
         
         if args.sr_scale != 1:
             lq = lq.resize(
