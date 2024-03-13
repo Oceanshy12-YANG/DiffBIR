@@ -995,7 +995,7 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         return dict(lq=lq, pred=pred, hq=hq)
 
 
-
+"""
 
     def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
         hq, lq = batch[self.hq_key], batch[self.lq_key]
@@ -1004,7 +1004,7 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         images = make_grid(images, 4, 0)
         images = cv2.imread('/content/test.jpg')
         cv2.imwrite('/content/test_cv2.jpg', image)
-
+"""
 
 """""
 import matplotlib.pyplot as plt
