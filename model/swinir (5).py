@@ -948,12 +948,6 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         hq, lq = batch[self.hq_key], batch[self.lq_key]
         hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
         lq = rearrange(lq, "n h w c -> n c h w")
-        images, labels = next(iter(lq))
-        print(images.size())  # torch.Size([8, 1, 28, 28])
-        images = make_grid(images, 4, 0)
-        print(images.size())  # torch.Size([3, 84, 84])
-        save_image(images, 'D:\maozan1\Desktop\JDWork\\vscode\pytorch-demo\\test.jpg')
-        pred = self(lq)
         loss = self.get_loss(pred, hq)
         self.log("train_loss", loss, on_step=True)
         return loss
@@ -1001,13 +995,9 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
 
 
 
-"""
+
     def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
         hq, lq = batch[self.hq_key], batch[self.lq_key]
-        hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
-        lq = rearrange(lq, "n h w c -> n c h w")
-        pred = self(lq)
-            
         images, labels = next(iter(lq))
         print(images.size())  # torch.Size([8, 1, 28, 28])
         images = make_grid(images, 4, 0)
@@ -1017,7 +1007,7 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
 
 
 
-""""""
+"""""
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
