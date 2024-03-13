@@ -19,6 +19,11 @@ from pytorch_lightning.utilities.types import STEP_OUTPUT
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from einops import rearrange
 
+import torch
+from torch.utils.data import DataLoader, dataloader
+from torchvision import datasets, transforms
+from torchvision.utils import make_grid, save_image
+
 
 from utils.metrics import calculate_psnr_pt, LPIPS
 from .mixins import ImageLoggerMixin
@@ -989,21 +994,20 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         pred = self(lq)
         return dict(lq=lq, pred=pred, hq=hq)
 
-import torch
-from torch.utils.data import DataLoader, dataloader
-from torchvision import datasets, transforms
-from torchvision.utils import make_grid, save_image
-def log_images(self, batch: Any) -> Dict[str, torch.Tensor]:
-    hq, lq = batch[self.hq_key], batch[self.lq_key]
-    hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
-    lq = rearrange(lq, "n h w c -> n c h w")
-    pred = self(lq)
-        
-    images, labels = next(iter(lq))
-    print(images.size())  # torch.Size([8, 1, 28, 28])
-    images = make_grid(images, 4, 0)
-    print(images.size())  # torch.Size([3, 84, 84])
-    save_image(images, 'D:\maozan1\Desktop\JDWork\\vscode\pytorch-demo\\test.jpg')
+
+
+
+    def lq_images(self, batch: Any) -> Dict[str, torch.Tensor]:
+        hq, lq = batch[self.hq_key], batch[self.lq_key]
+        hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
+        lq = rearrange(lq, "n h w c -> n c h w")
+        pred = self(lq)
+            
+        images, labels = next(iter(lq))
+        print(images.size())  # torch.Size([8, 1, 28, 28])
+        images = make_grid(images, 4, 0)
+        print(images.size())  # torch.Size([3, 84, 84])
+        save_image(images, 'D:\maozan1\Desktop\JDWork\\vscode\pytorch-demo\\test.jpg')
 
 
 
