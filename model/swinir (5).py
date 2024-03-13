@@ -5,6 +5,7 @@
 
 # Originally borrowed from DifFace (https://github.com/zsyOAOA/DifFace/blob/master/models/swinir.py)
 
+import cv2
 import math
 from typing import Any, Dict, Set
 
@@ -1001,10 +1002,8 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
         images, labels = next(iter(lq))
         print(images.size())  # torch.Size([8, 1, 28, 28])
         images = make_grid(images, 4, 0)
-        print(images.size())  # torch.Size([3, 84, 84])
-        save_image(images, '/content/test.jpg')
-
-
+        images = cv2.imread('/content/test.jpg')
+        cv2.imwrite('/content/test_cv2.jpg', image)
 
 
 """""
