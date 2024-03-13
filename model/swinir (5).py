@@ -989,6 +989,7 @@ class SwinIR(pl.LightningModule, ImageLoggerMixin):
     @torch.no_grad()
     def log_images(self, batch: Any) -> Dict[str, torch.Tensor]:
         hq, lq = batch[self.hq_key], batch[self.lq_key]
+        
         print("Type of lq:", type(lq))
         print("Shape of lq:", lq.shape)
         hq = rearrange(((hq + 1) / 2).clamp_(0, 1), "n h w c -> n c h w")
